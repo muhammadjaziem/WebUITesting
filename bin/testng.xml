@@ -1,0 +1,7 @@
+<suite name="TestSuite">
+    <test name="WebUITesting">
+        <classes>
+            <class name="com.example.runner.RunnerTests"/>
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->
