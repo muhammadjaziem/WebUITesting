@@ -4,9 +4,13 @@ import com.example.utils.HelperClass;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 public class CheckoutPage {
 
+    private WebDriverWait wait;
 
     @FindBy(id = "first-name")
     private WebElement firstNameField;
@@ -28,20 +32,21 @@ public class CheckoutPage {
 
     public CheckoutPage() {
         PageFactory.initElements(HelperClass.getDriver(), this);
+        wait = new WebDriverWait(HelperClass.getDriver(), Duration.ofSeconds(10));
     }
 
     public void enterCheckoutDetails(String firstName, String lastName, String postalCode) {
         firstNameField.sendKeys(firstName);
         lastNameField.sendKeys(lastName);
         postalCodeField.sendKeys(postalCode);
-        continueButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(continueButton)).click();
     }
 
     public void completeCheckout() {
-        finishButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(finishButton)).click();
     }
 
     public String isCheckoutComplete() {
-        return checkoutCompleteMessage.getText();
+        return wait.until(ExpectedConditions.visibilityOf(checkoutCompleteMessage)).getText();
     }
 }
